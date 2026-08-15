@@ -24,10 +24,10 @@ function Login(){
         try{
             const response = await api.post("/auth/login", user);
             localStorage.setItem("token", response.data.token);
-            alert(response.data.message)
+            alert(response?.data?.message || "Login successfull")
             navigate("/dashboard");
         }catch(err){
-            alert(err.response.data.message)
+            alert(err.response?.data?.message || "Login failed. Please try again")
         } 
     };
 
