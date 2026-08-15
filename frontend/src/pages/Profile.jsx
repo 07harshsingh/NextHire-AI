@@ -48,7 +48,7 @@ function Profile(){
            setProfile({...data, skills: data.skills? data.skills.join(",") : ""});
            setExistProfile(true);
         }catch(err){
-           alert(err.response?.data?.message || "Something went wrong")
+           alert(err.response?.data?.message || "Profile doesn't created")
         }finally{
             setLoading(false)
         }
