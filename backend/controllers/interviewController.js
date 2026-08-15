@@ -26,20 +26,40 @@ const interviewController = async (req, res, next) => {
     }
 }
 
+// const getAllInterview = async (req, res, next) => {
+//     try{
+//         const interview = await Interview.find({user : req.user.id});
+//         if(!interview){
+//             const error = new Error("No interview found");
+//             error.statusCode = 400;
+//             return next(error);
+//         }
+//         res.status(200).json({
+//             success : true,
+//             data : interview
+//         });
+//     }catch(err){
+//         next(err)
+//     }
+// };
+
 const getAllInterview = async (req, res, next) => {
-    try{
-        const interview = await Interview.find({user : req.user.id});
-        if(!interview){
-            const error = new Error("No interview found");
-            error.statusCode = 400;
-            return next(error);
-        }
-        res.status(200).json({
-            success : true,
-            data : interview
+    try {
+        console.log("REQ.USER:", req.user);
+        console.log("USER ID:", req.user.id);
+
+        const interview = await Interview.find({
+            user: req.user.id
         });
-    }catch(err){
-        next(err)
+
+        console.log("INTERVIEWS FOUND:", interview);
+
+        res.status(200).json({
+            success: true,
+            data: interview
+        });
+    } catch (err) {
+        next(err);
     }
 };
 

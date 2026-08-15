@@ -21,26 +21,42 @@ function CreateInterviews(){
     };
 
     const handleForm = async (e) => {
-        e.preventDefault();
-        try{
-           const payload = {...createInterview, 
-                        technologies : createInterview.technologies
-                        .split(",")
-                        .map((item) => item.trim())
-                        }
-           const response = await api.post("/interview/", payload);
-           alert(response.data.message);
-           navigate("/dashboard")
-        }catch(err){
-           console.log(err);
+    e.preventDefault();
 
-    alert(
-        err.response?.data?.message ||
-        err.message ||
-        "Something went wrong"
-    );
-        }
-    };
+    try {
+        const payload = {
+            title: createInterview.title.trim(),
+            role: createInterview.role.trim(),
+            experience: createInterview.experience.trim(),
+            technologies: createInterview.technologies
+                .split(",")
+                .map((item) => item.trim())
+                .filter((item) => item !== ""),
+            description: createInterview.description.trim(),
+            difficulty: createInterview.difficulty,
+            questionCount: Number(createInterview.questionCount)
+        };
+
+        console.log("SENDING INTERVIEW:", payload);
+
+        const response = await api.post("/interview/", payload);
+
+        console.log("CREATE INTERVIEW RESPONSE:", response.data);
+
+        alert(response.data.message || "Interview created successfully");
+
+        navigate("/dashboard");
+    } catch (err) {
+        console.error("CREATE INTERVIEW ERROR:", err);
+        console.error("SERVER RESPONSE:", err.response?.data);
+
+        alert(
+            err.response?.data?.message ||
+            err.message ||
+            "Something went wrong"
+        );
+    }
+};
 
     return (
   <div className="min-h-screen bg-[#08090b] px-4 py-10 text-white">
@@ -168,7 +184,7 @@ function CreateInterviews(){
                 value={createInterview.questionCount}
                 onChange={handleChange}
                 name="questionCount"
-                type="text"
+                type="number"
                 placeholder="e.g. 5"
                 className="w-full rounded-xl border border-white/10 bg-[#0b0c0f] px-4 py-3 text-white outline-none transition placeholder:text-gray-600 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
               />
