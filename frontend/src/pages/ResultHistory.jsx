@@ -16,7 +16,11 @@ function ResultHistory(){
           setLoading(true);
           setError("");
           const response = await api.get("/interview/result/history");     
-          setResultHistory(response.data.results)
+          setResultHistory(
+             Array.isArray(response.data?.results) ? response.data.results
+           : Array.isArray(response.data?.data) ? response.data.data
+           : []
+          );
         }catch(err){
             setError(err.response?.data?.message || err.message || "Something went wrong unable to show result")
         }finally{
