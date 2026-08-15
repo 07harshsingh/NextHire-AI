@@ -15,7 +15,10 @@ connectDB();
 app.use(express.json());
 
 app.use(cors({
-    origin: "https://nexthire-ai-1-u49v.onrender.com",
+    origin: [
+        "http://localhost:5173",
+        "https://nexthire-ai-1-u49v.onrender.com"
+    ],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"]
 }));
