@@ -44,11 +44,15 @@ function Profile(){
     const getProfile = async () => {
         try{
            const response = await api.get("/profile/me");
+           if(!response){
+              alert("Profile not created");
+              return;
+           }
            const data = response.data.data
            setProfile({...data, skills: data.skills? data.skills.join(",") : ""});
            setExistProfile(true);
         }catch(err){
-           alert(err.response?.data?.message || "Profile doesn't created")
+           alert(err.response?.data?.message || "Something went wrong")
         }finally{
             setLoading(false)
         }
