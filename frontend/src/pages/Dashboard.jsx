@@ -31,7 +31,13 @@ function Dashboard(){
             setLoading(true);
             setError("")
             const response = await api.get("/interview/");    
-            setInterviews(response.data.data);
+            setInterviews(
+              Array.isArray(response.data?.data)
+              ? response.data.data
+              : Array.isArray(response.data)
+              ? response.data
+              : []
+            );
         }catch(err){
              setError(err.response?.data?.message || err.message || "Something went wrong while starting the interview")
         }finally{
