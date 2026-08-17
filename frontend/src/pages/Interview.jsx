@@ -191,7 +191,12 @@ useEffect(() => {
      //////////Timer/////////////////////
     useEffect(() => {
       if(timeLeft<=0){
-         nextQuestion();
+         if(answer.trim()){
+           submitAnswer()
+         }
+         else{
+           nextQuestion()
+         }
          return;
       }
       const timer = setTimeout(() => {
